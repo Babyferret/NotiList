@@ -65,7 +65,7 @@ class _TodoListState extends State<TodoList> {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: ListTile(
-                tileColor: nc.tasks[index].colorIndex == true
+                tileColor: nc.tasks[index].colorIndex != null
                     ? getColorFromIndex(nc.tasks[index].colorIndex)
                     : Colors.white, // Set tile color based on colorIndex
                 shape: RoundedRectangleBorder(

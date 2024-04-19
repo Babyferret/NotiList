@@ -1,10 +1,25 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:notilist/pages/login_page.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  final auth = FirebaseAuth.instance;
+
   final src =
       'https://variety.com/wp-content/uploads/2023/03/john-wick-chapter-4-keanu.jpg?w=1000&h=563&crop=1';
+
+  void selectImage() {
+     
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +74,7 @@ class ProfilePage extends StatelessWidget {
                 const SizedBox(height: 10),
                 support_button(),
                 const SizedBox(height: 10),
-                logout_button(),
+                logout_button(context),
               ],
             ),
           ),
@@ -240,7 +255,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Container logout_button() {
+  Container logout_button(BuildContext context) {
     return Container(
       width: double.maxFinite,
       height: 48,
@@ -254,8 +269,14 @@ class ProfilePage extends StatelessWidget {
           textStyle: const TextStyle(fontSize: 20),
         ),
         onPressed: () {
-          // เพิ่มฟังก์ชันในการเปลี่ยนหน้า
-          print('Logout Button');
+          auth.signOut().then(
+            (value) {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
+                return const LoginPage();
+              }));
+            },
+          );
         },
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -298,10 +319,43 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  CircleAvatar profilepicture() {
-    return CircleAvatar(
-      radius: 90,
-      backgroundImage: NetworkImage(src),
-    );
+  Stack profilepicture() {
+    return Stack(children: [
+      Container(
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(color: Colors.black45, spreadRadius: 2, blurRadius: 10)
+          ],
+        ),
+        child: CircleAvatar(
+          radius: 90,
+          backgroundImage: NetworkImage(src),
+        ),
+      ),
+      Positioned(
+        bottom: 0,
+        left: 125,
+        child: IconButton(
+          icon: Container(
+            padding: const EdgeInsets.all(5),
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black45, spreadRadius: 2, blurRadius: 10)
+              ],
+            ),
+            child: const Icon(
+              Icons.edit,
+              color: Color(0xff33363f),
+              opticalSize: 20,
+            ),
+          ),
+          onPressed: () {},
+        ),
+      ),
+    ]);
   }
 }

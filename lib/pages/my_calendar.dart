@@ -51,23 +51,25 @@ class _CalendarState extends State<Calendar> {
                 topLeft: Radius.circular(30),
                 topRight: Radius.circular(30),
               )),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: Colors.white,
-                    // color: Color(0xFFBBDDFF),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(30),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: Colors.white,
+                      // color: Color(0xFFBBDDFF),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30),
+                      ),
                     ),
+                    child: calendar_table(),
                   ),
-                  child: calendar_table(),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

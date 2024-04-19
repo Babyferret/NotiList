@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notilist/pages/login_page.dart';
 import 'package:notilist/pages/profile_page.dart';
 import 'package:notilist/pages/my_note_page.dart';
 import 'package:notilist/pages/my_to_do.dart';
@@ -17,10 +18,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      home: MainPage(), // Updated to use MainPage
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        // home: MainPage(), // Updated to use MainPage
+        home: LoginPage());
   }
 }
 
@@ -70,9 +71,9 @@ class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
   final List<Widget> _pages = [
     const Calendar(),
-    TodoList(),
-    NoteList(),
-    const ProfilePage(),
+    const TodoList(),
+    const NoteList(),
+    ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
