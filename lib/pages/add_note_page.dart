@@ -6,7 +6,7 @@ import 'package:notilist/models/controller.dart';
 class MyNote extends StatefulWidget {
   final int? index;
 
-  MyNote({this.index});
+  const MyNote({super.key, this.index});
 
   @override
   _MyNoteState createState() => _MyNoteState();
@@ -31,7 +31,7 @@ class _MyNoteState extends State<MyNote> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Note'),
+          title: const Text('Note'),
           centerTitle: true,
           toolbarHeight: 70,
           leading: Padding(
@@ -106,7 +106,6 @@ class _MyNoteState extends State<MyNote> {
         }
         Get.back();
       },
-      child: widget.index == null ? Text('Add') : Text('Edit'),
       style: ElevatedButton.styleFrom(
           fixedSize: const Size(125, 50),
           textStyle: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -114,6 +113,7 @@ class _MyNoteState extends State<MyNote> {
           elevation: 5,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           foregroundColor: Colors.white),
+      child: widget.index == null ? const Text('Add') : const Text('Edit'),
     );
   }
 

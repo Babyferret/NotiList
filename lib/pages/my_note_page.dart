@@ -4,6 +4,8 @@ import 'package:notilist/models/controller.dart';
 import 'package:notilist/pages/add_note_page.dart';
 
 class NoteList extends StatefulWidget {
+  const NoteList({super.key});
+
   @override
   _NoteListState createState() => _NoteListState();
 }
@@ -14,19 +16,19 @@ class _NoteListState extends State<NoteList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(
+      backgroundColor: const Color.fromARGB(
           255, 255, 255, 255), // Set the background color to transparent
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Todo App'),
+        title: const Text('Todo App'),
       ),
       floatingActionButton: FloatingActionButton(
-        heroTag: 'unique2', // Add a unique heroTag for the FloatingActionButton
-        child: Icon(Icons.add, color: Colors.black87),
+        heroTag: 'unique2',
         backgroundColor: Colors.white,
         onPressed: () {
           Get.to(() => MyNote());
-        },
+        }, // Add a unique heroTag for the FloatingActionButton
+        child: const Icon(Icons.add, color: Colors.black87),
       ),
 
       body: Container(
@@ -39,11 +41,11 @@ class _NoteListState extends State<NoteList> {
               const Color(0xffffb763)
                   .withOpacity(0.1), // Cream gradient color end
             ],
-            stops: [0.0, 0.5], // Adjust the gradient stops if needed
+            stops: const [0.0, 0.5], // Adjust the gradient stops if needed
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.all(5),
+          padding: const EdgeInsets.all(5),
           child: getTodoList(),
         ),
       ),
@@ -53,7 +55,7 @@ class _NoteListState extends State<NoteList> {
   Widget getTodoList() {
     return Obx(
       () => nc.notes.isEmpty
-          ? Center(
+          ? const Center(
               child: Text('No notes yet')) // Placeholder text for empty list
           : ListView.builder(
               itemCount: nc.notes.length,
@@ -66,7 +68,7 @@ class _NoteListState extends State<NoteList> {
                   },
                   child: Card(
                     margin:
-                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                        const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                     shadowColor: Colors.grey.withOpacity(0.5),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -100,11 +102,11 @@ class _NoteListState extends State<NoteList> {
                               nc.notes.refresh();
                             },
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           Expanded(
                             child: Text(
                               note.title,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500,
                               ),

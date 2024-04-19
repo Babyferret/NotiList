@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:notilist/models/Data.dart';
 import 'package:get/get.dart';
 import 'package:notilist/models/controller.dart';
@@ -17,11 +15,11 @@ class MyTodo extends StatefulWidget {
 class _MyTodoState extends State<MyTodo> {
 
     final colorList = [
-    Color.fromRGBO(255, 255, 255, 1),
-    Color.fromRGBO(255, 174, 174, 1),
-    Color.fromRGBO(255, 211, 146, 1),
-    Color.fromRGBO(183, 246, 255, 1),
-    Color.fromRGBO(205, 175, 255, 1),
+    const Color.fromRGBO(255, 255, 255, 1),
+    const Color.fromRGBO(255, 174, 174, 1),
+    const Color.fromRGBO(255, 211, 146, 1),
+    const Color.fromRGBO(183, 246, 255, 1),
+    const Color.fromRGBO(205, 175, 255, 1),
   ];
 
   final TodoController nc = Get.find();
@@ -89,7 +87,7 @@ class _MyTodoState extends State<MyTodo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Task'),
+        title: const Text('Task'),
         centerTitle: true,
         toolbarHeight: 70,
         leading: Padding(
@@ -201,7 +199,6 @@ class _MyTodoState extends State<MyTodo> {
         }
         Get.back();
       },
-      child: widget.index == null ? Text('Add') : Text('Edit'),
       style: ElevatedButton.styleFrom(
         fixedSize: const Size(125, 50),
         textStyle: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -210,6 +207,7 @@ class _MyTodoState extends State<MyTodo> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         foregroundColor: Colors.white,
       ),
+      child: widget.index == null ? const Text('Add') : const Text('Edit'),
     );
   }
 
@@ -222,13 +220,13 @@ class _MyTodoState extends State<MyTodo> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             starttimetext(),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             GestureDetector(
               onTap: () => _selectStartTime(context),
               child: Container(
                 height: 48,
                 margin: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                padding: EdgeInsets.symmetric(horizontal: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -239,9 +237,9 @@ class _MyTodoState extends State<MyTodo> {
                   children: [
                     Text(
                       '${selectedStartTime.hour}:${selectedStartTime.minute}',
-                      style: TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 16),
                     ),
-                    Icon(Icons.access_time),
+                    const Icon(Icons.access_time),
                   ],
                 ),
               ),
@@ -249,19 +247,19 @@ class _MyTodoState extends State<MyTodo> {
           ],
         ),
       ),
-      SizedBox(width: 10), // Added spacing between Start Time and End Time
+      const SizedBox(width: 10), // Added spacing between Start Time and End Time
       Expanded(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             endtimetext(), // End Time text positioned above the End Time selection box
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             GestureDetector(
               onTap: () => _selectEndTime(context),
               child: Container(
                 height: 48,
                 margin: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                padding: EdgeInsets.symmetric(horizontal: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -272,9 +270,9 @@ class _MyTodoState extends State<MyTodo> {
                   children: [
                     Text(
                       '${selectedEndTime.hour}:${selectedEndTime.minute}',
-                      style: TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 16),
                     ),
-                    Icon(Icons.access_time),
+                    const Icon(Icons.access_time),
                   ],
                 ),
               ),
@@ -299,15 +297,15 @@ class _MyTodoState extends State<MyTodo> {
         borderRadius: BorderRadius.circular(15),
         border: Border.all(color: Colors.black),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
-            style: TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           ),
-          Icon(Icons.calendar_today),
+          const Icon(Icons.calendar_today),
         ],
       ),
     ),
@@ -372,7 +370,7 @@ class _MyTodoState extends State<MyTodo> {
   }
 
   Padding titletext() {
-    return Padding(
+    return const Padding(
       padding: EdgeInsets.only(left: 25),
       child: Align(
         alignment: Alignment.centerLeft,
@@ -388,7 +386,7 @@ class _MyTodoState extends State<MyTodo> {
   }
 
   Padding descriptiontext() {
-    return Padding(
+    return const Padding(
       padding: EdgeInsets.only(left: 25),
       child: Align(
         alignment: Alignment.centerLeft,
@@ -404,7 +402,7 @@ class _MyTodoState extends State<MyTodo> {
   }
 
   Padding datetext() {
-    return Padding(
+    return const Padding(
       padding: EdgeInsets.only(left: 25),
       child: Align(
         alignment: Alignment.centerLeft,
@@ -420,7 +418,7 @@ class _MyTodoState extends State<MyTodo> {
   }
 
   Padding colortext() {
-    return Padding(
+    return const Padding(
       padding: EdgeInsets.only(left: 25),
       child: Align(
         alignment: Alignment.centerLeft,
