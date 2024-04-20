@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:notilist/pages/login_page.dart';
+import 'package:notilist/pages/notification_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -22,8 +23,10 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: const Text(
           'Profile',
-          style:
-              TextStyle(color: Color(0xff7a2d2d), fontWeight: FontWeight.bold, fontFamily: 'Adamina'),
+          style: TextStyle(
+              color: Color(0xff7a2d2d),
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Adamina'),
         ),
         systemOverlayStyle:
             const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
@@ -62,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 const SizedBox(height: 10),
                 nametext(),
                 const SizedBox(height: 15),
-                notifications_button(),
+                notifications_button(context),
                 const SizedBox(height: 10),
                 privacy_button(),
                 const SizedBox(height: 10),
@@ -79,7 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Container notifications_button() {
+  Container notifications_button(BuildContext context) {
     return Container(
       width: double.maxFinite,
       height: 48,
@@ -93,8 +96,10 @@ class _ProfilePageState extends State<ProfilePage> {
           textStyle: const TextStyle(fontSize: 20),
         ),
         onPressed: () {
-          // เพิ่มฟังก์ชันในการเปลี่ยนหน้า
-          print('Notifiactions Button');
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) {
+            return NotificationPage();
+          }));
         },
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

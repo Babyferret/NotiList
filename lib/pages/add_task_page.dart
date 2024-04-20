@@ -92,7 +92,10 @@ class _MyTodoState extends State<MyTodo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Task'),
+        title: const Text(
+          'Task',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         toolbarHeight: 70,
         leading: Padding(
@@ -117,30 +120,45 @@ class _MyTodoState extends State<MyTodo> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 30),
-            titletext(),
-            const SizedBox(height: 5),
-            titlefield(),
-            const SizedBox(height: 10),
-            descriptiontext(),
-            const SizedBox(height: 5),
-            descriptionfield(),
-            const SizedBox(height: 10),
-            datetext(),
-            const SizedBox(height: 5),
-            datefield(),
-            const SizedBox(height: 10),
-            timefield(),
-            const SizedBox(height: 15),
-            colortext(),
-            const SizedBox(height: 10),
-            colorSelection(),
-            const SizedBox(height: 15),
-            addbutton(),
-          ],
+      body: Center(
+        child: Container(
+          height: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.center,
+              end: Alignment.bottomCenter,
+              colors: [
+                const Color(0xfffff9f2).withOpacity(1),
+                const Color(0xffffb763).withOpacity(0.1),
+              ],
+            ),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 30),
+                titletext(),
+                const SizedBox(height: 5),
+                titlefield(),
+                const SizedBox(height: 10),
+                descriptiontext(),
+                const SizedBox(height: 5),
+                descriptionfield(),
+                const SizedBox(height: 10),
+                datetext(),
+                const SizedBox(height: 5),
+                datefield(),
+                const SizedBox(height: 10),
+                timefield(),
+                const SizedBox(height: 15),
+                colortext(),
+                const SizedBox(height: 10),
+                colorSelection(),
+                const SizedBox(height: 15),
+                addbutton(),
+              ],
+            ),
+          ),
         ),
       ),
     );

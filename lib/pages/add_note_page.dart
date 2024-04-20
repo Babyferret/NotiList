@@ -38,7 +38,10 @@ class _MyNoteState extends State<MyNote> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Note'),
+        title: const Text(
+          'Note',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         toolbarHeight: 70,
         leading: Padding(
