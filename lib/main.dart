@@ -18,10 +18,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        // home: MainPage(), // Updated to use MainPage
-        home: LoginPage());
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      // home: MainPage(), // Updated to use MainPage
+      home: LoginPage(),
+    );
   }
 }
 
@@ -110,22 +111,22 @@ class _MainPageState extends State<MainPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               RoundedNavItem(
-                icon: Icons.calendar_today,
+                icon: Icons.calendar_month,
                 isSelected: _selectedIndex == 0,
                 onTap: () => _onItemTapped(0),
               ),
               RoundedNavItem(
-                icon: Icons.check_box,
+                icon: Icons.format_list_bulleted,
                 isSelected: _selectedIndex == 1,
                 onTap: () => _onItemTapped(1),
               ),
               RoundedNavItem(
-                icon: Icons.note,
+                icon: Icons.sticky_note_2_outlined,
                 isSelected: _selectedIndex == 2,
                 onTap: () => _onItemTapped(2),
               ),
               RoundedNavItem(
-                icon: Icons.person,
+                icon: Icons.person_2_outlined,
                 isSelected: _selectedIndex == 3,
                 onTap: () => _onItemTapped(3),
               ),

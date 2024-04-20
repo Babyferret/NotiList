@@ -27,7 +27,7 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: const Text(
           'Profile',
-          style: TextStyle(color: Color(0xff7a2d2d)),
+          style: TextStyle(color: Color(0xff7a2d2d), fontWeight: FontWeight.bold),
         ),
         systemOverlayStyle:
             const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
