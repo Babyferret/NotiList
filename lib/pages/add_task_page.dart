@@ -13,8 +13,7 @@ class MyTodo extends StatefulWidget {
 }
 
 class _MyTodoState extends State<MyTodo> {
-
-    final colorList = [
+  final colorList = [
     const Color.fromRGBO(255, 255, 255, 1),
     const Color.fromRGBO(255, 174, 174, 1),
     const Color.fromRGBO(255, 211, 146, 1),
@@ -29,7 +28,6 @@ class _MyTodoState extends State<MyTodo> {
   TimeOfDay selectedStartTime = TimeOfDay.now();
   TimeOfDay selectedEndTime = TimeOfDay.now();
   int selectedColorIndex = 0; // Default color index is 0 (white)
-
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
@@ -67,6 +65,13 @@ class _MyTodoState extends State<MyTodo> {
         selectedEndTime = pickedTime;
       });
     }
+  }
+
+  bool _validateForm() {
+    if (titleController.text.isEmpty || descriptionController.text.isEmpty) {
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -115,89 +120,92 @@ class _MyTodoState extends State<MyTodo> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-
-                const SizedBox(height: 30),
-                titletext(),
-                const SizedBox(height: 5),
-                titlefield(),
-                const SizedBox(height: 10),
-                descriptiontext(),
-                const SizedBox(height: 5),
-                descriptionfield(),
-                const SizedBox(height: 10),
-                datetext(),
-                const SizedBox(height: 5),
-                datefield(),
-                const SizedBox(height: 10),
-                timefield(),
-                const SizedBox(height: 15),
-                colortext(),
-                const SizedBox(height: 10),
-                colorSelection(),
-                const SizedBox(height: 15),
-                addbutton(),
-               ],
+            const SizedBox(height: 30),
+            titletext(),
+            const SizedBox(height: 5),
+            titlefield(),
+            const SizedBox(height: 10),
+            descriptiontext(),
+            const SizedBox(height: 5),
+            descriptionfield(),
+            const SizedBox(height: 10),
+            datetext(),
+            const SizedBox(height: 5),
+            datefield(),
+            const SizedBox(height: 10),
+            timefield(),
+            const SizedBox(height: 15),
+            colortext(),
+            const SizedBox(height: 10),
+            colorSelection(),
+            const SizedBox(height: 15),
+            addbutton(),
+          ],
         ),
       ),
     );
- 
   }
 
- Widget colorSelection() {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 25),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: colorList.asMap().entries.map((entry) {
-        final index = entry.key;
-        final color = entry.value;
-        return GestureDetector(
-          onTap: () {
-            setState(() {
-              selectedColorIndex = index;
-            });
-          },
-          child: Container(
-            width: 30,
-            height: 30,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: color,
-              border: Border.all(
-                color: selectedColorIndex == index ? Colors.black : Colors.transparent,
-                width: 2,
+  Widget colorSelection() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: colorList.asMap().entries.map((entry) {
+          final index = entry.key;
+          final color = entry.value;
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                selectedColorIndex = index;
+              });
+            },
+            child: Container(
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: color,
+                border: Border.all(
+                  color: selectedColorIndex == index
+                      ? Colors.black
+                      : Colors.transparent,
+                  width: 2,
+                ),
               ),
             ),
-          ),
-        );
-      }).toList(),
-    ),
-  );
-}
+          );
+        }).toList(),
+      ),
+    );
+  }
 
   ElevatedButton addbutton() {
     return ElevatedButton(
       onPressed: () {
-        if (widget.index == null) {
-          nc.add(Task(
-            title: titleController.text,
-            description: descriptionController.text,
-            date: selectedDate,
-            startTime: selectedStartTime,
-            endTime: selectedEndTime,
-            colorIndex: selectedColorIndex, // Pass selectedColorIndex here
-          ));
-        } else {
-          var updateTodo = nc.tasks[widget.index!];
-          updateTodo.title = titleController.text;
-          updateTodo.description = descriptionController.text;
-          updateTodo.date = selectedDate;
-          updateTodo.startTime = selectedStartTime;
-          updateTodo.endTime = selectedEndTime;
-          updateTodo.colorIndex = selectedColorIndex; // Update selectedColorIndex
-          nc.tasks[widget.index!] = updateTodo;
+        if (_validateForm()) {
+          if (widget.index == null) {
+            nc.add(Task(
+              title: titleController.text,
+              description: descriptionController.text,
+              date: selectedDate,
+              startTime: selectedStartTime,
+              endTime: selectedEndTime,
+              colorIndex: selectedColorIndex, // Pass selectedColorIndex here
+            ));
+          } else {
+            var updateTodo = nc.tasks[widget.index!];
+            updateTodo.title = titleController.text;
+            updateTodo.description = descriptionController.text;
+            updateTodo.date = selectedDate;
+            updateTodo.startTime = selectedStartTime;
+            updateTodo.endTime = selectedEndTime;
+            updateTodo.colorIndex =
+                selectedColorIndex; // Update selectedColorIndex
+            nc.tasks[widget.index!] = updateTodo;
+          }
+          Get.back();
         }
-        Get.back();
       },
       style: ElevatedButton.styleFrom(
         fixedSize: const Size(125, 50),
@@ -212,106 +220,104 @@ class _MyTodoState extends State<MyTodo> {
   }
 
   Widget timefield() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: <Widget>[
-      Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            starttimetext(),
-            const SizedBox(height: 5),
-            GestureDetector(
-              onTap: () => _selectStartTime(context),
-              child: Container(
-                height: 48,
-                margin: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: Colors.black),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '${selectedStartTime.hour}:${selectedStartTime.minute}',
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    const Icon(Icons.access_time),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      const SizedBox(width: 10), // Added spacing between Start Time and End Time
-      Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            endtimetext(), // End Time text positioned above the End Time selection box
-            const SizedBox(height: 5),
-            GestureDetector(
-              onTap: () => _selectEndTime(context),
-              child: Container(
-                height: 48,
-                margin: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: Colors.black),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '${selectedEndTime.hour}:${selectedEndTime.minute}',
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    const Icon(Icons.access_time),
-                  ],
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              starttimetext(),
+              const SizedBox(height: 5),
+              GestureDetector(
+                onTap: () => _selectStartTime(context),
+                child: Container(
+                  height: 48,
+                  margin: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: Colors.black),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${selectedStartTime.hour}:${selectedStartTime.minute}',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      const Icon(Icons.access_time),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    ],
-  );
-}
-
-
+        const SizedBox(
+            width: 10), // Added spacing between Start Time and End Time
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              endtimetext(), // End Time text positioned above the End Time selection box
+              const SizedBox(height: 5),
+              GestureDetector(
+                onTap: () => _selectEndTime(context),
+                child: Container(
+                  height: 48,
+                  margin: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: Colors.black),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${selectedEndTime.hour}:${selectedEndTime.minute}',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      const Icon(Icons.access_time),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 
   GestureDetector datefield() {
-  return GestureDetector(
-    onTap: () => _selectDate(context),
-    child: Container(
-      height: 48,
-      margin: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.black),
+    return GestureDetector(
+      onTap: () => _selectDate(context),
+      child: Container(
+        height: 48,
+        margin: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: Colors.black),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+              style: const TextStyle(fontSize: 16),
+            ),
+            const Icon(Icons.calendar_today),
+          ],
+        ),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
-            style: const TextStyle(fontSize: 16),
-          ),
-          const Icon(Icons.calendar_today),
-        ],
-      ),
-    ),
-  );
-}
-
+    );
+  }
 
   Container titlefield() {
     return Container(
@@ -464,5 +470,4 @@ class _MyTodoState extends State<MyTodo> {
       ),
     );
   }
-
 }

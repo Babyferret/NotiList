@@ -27,91 +27,101 @@ class _MyNoteState extends State<MyNote> {
     }
   }
 
+  bool _validateForm() {
+    if (titleController.text.isEmpty || descriptionController.text.isEmpty) {
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Note'),
-          centerTitle: true,
-          toolbarHeight: 70,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 15),
-            child: IconButton(
-              onPressed: () {
+      appBar: AppBar(
+        title: const Text('Note'),
+        centerTitle: true,
+        toolbarHeight: 70,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 15),
+          child: IconButton(
+            onPressed: () {
               Navigator.pop(context);
             },
-              icon: const Icon(Icons.arrow_back_ios_new),
+            icon: const Icon(Icons.arrow_back_ios_new),
+          ),
+        ),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            color: Color(0xfff4d3bd),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(30),
+            ),
+            boxShadow: [
+              BoxShadow(color: Colors.black45, spreadRadius: 2, blurRadius: 10),
+            ],
+          ),
+        ),
+      ),
+      body: Center(
+        child: Container(
+          height: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.center,
+              end: Alignment.bottomCenter,
+              colors: [
+                const Color(0xfffff9f2).withOpacity(1),
+                const Color(0xffffb763).withOpacity(0.1),
+              ],
             ),
           ),
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              color: Color(0xfff4d3bd),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-              boxShadow: [
-                BoxShadow(color: Colors.black45, spreadRadius: 2, blurRadius: 10),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 30),
+                titletext(),
+                const SizedBox(height: 5),
+                titlefield(),
+                const SizedBox(height: 15),
+                notetext(),
+                const SizedBox(height: 5),
+                notefield(),
+                const SizedBox(height: 15),
+                addbutton(),
               ],
             ),
           ),
         ),
-        body: Center(
-          child: Container(
-            height: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.center,
-                end: Alignment.bottomCenter,
-                colors: [
-                  const Color(0xfffff9f2).withOpacity(1),
-                  const Color(0xffffb763).withOpacity(0.1),
-                ],
-              ),
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 30),
-                  titletext(),
-                  const SizedBox(height: 5),
-                  titlefield(),
-                  const SizedBox(height: 15),
-                  notetext(),
-                  const SizedBox(height: 5),
-                  notefield(),
-                  const SizedBox(height: 15),
-                  addbutton(),
-                ],
-              ),
-            ),
-          ),
-        ),
-      );
+      ),
+    );
   }
 
   ElevatedButton addbutton() {
     return ElevatedButton(
       onPressed: () {
-        if (widget.index == null) {
-          nc.add(Note(
-            title: titleController.text,
-            description: descriptionController.text,
-          ));
-        } else {
-          var updateNote = nc.notes[widget.index!];
-          updateNote.title = titleController.text;
-          updateNote.description = descriptionController.text;
-          nc.notes[widget.index!] = updateNote;
+        if (_validateForm()) {
+          if (widget.index == null) {
+            nc.add(Note(
+              title: titleController.text,
+              description: descriptionController.text,
+            ));
+          } else {
+            var updateNote = nc.notes[widget.index!];
+            updateNote.title = titleController.text;
+            updateNote.description = descriptionController.text;
+            nc.notes[widget.index!] = updateNote;
+          }
+          Get.back();
         }
-        Get.back();
       },
       style: ElevatedButton.styleFrom(
           fixedSize: const Size(125, 50),
           textStyle: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
           backgroundColor: const Color(0xffc58d65),
           elevation: 5,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           foregroundColor: Colors.white),
       child: widget.index == null ? const Text('Add') : const Text('Edit'),
     );
@@ -129,6 +139,7 @@ class _MyNoteState extends State<MyNote> {
       ),
       child: TextField(
         controller: descriptionController,
+        maxLines: null,
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),

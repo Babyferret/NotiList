@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:notilist/pages/login_page.dart';
 
 class ProfilePage extends StatefulWidget {
-
   const ProfilePage({super.key});
 
   @override
@@ -17,17 +16,14 @@ class _ProfilePageState extends State<ProfilePage> {
   final src =
       'https://variety.com/wp-content/uploads/2023/03/john-wick-chapter-4-keanu.jpg?w=1000&h=563&crop=1';
 
-  void selectImage() {
-     
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           'Profile',
-          style: TextStyle(color: Color(0xff7a2d2d), fontWeight: FontWeight.bold),
+          style:
+              TextStyle(color: Color(0xff7a2d2d), fontWeight: FontWeight.bold, fontFamily: 'Adamina'),
         ),
         systemOverlayStyle:
             const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
@@ -309,9 +305,9 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Text nametext() {
-    return const Text(
-      'John Wick',
-      style: TextStyle(
+    return Text(
+      auth.currentUser?.email ?? 'No email available',
+      style: const TextStyle(
         fontSize: 25,
         color: Colors.black,
         fontWeight: FontWeight.bold,

@@ -57,7 +57,8 @@ class _NoteListState extends State<NoteList> {
                         'My Note,',
                         style: TextStyle(
                             color: Color(0xff7a2d2d),
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Adamina'),
                       ),
                       Text(
                         auth.currentUser?.email ?? 'No email available',
@@ -112,7 +113,7 @@ class _NoteListState extends State<NoteList> {
         heroTag: 'unique2',
         backgroundColor: Colors.white,
         onPressed: () {
-          Get.to(() => MyNote());
+          Get.to(() => const MyNote());
         }, // Add a unique heroTag for the FloatingActionButton
         child: const Icon(Icons.add, color: Colors.black87),
       ),
@@ -190,12 +191,35 @@ class _NoteListState extends State<NoteList> {
                           ),
                           const SizedBox(width: 8),
                           Expanded(
-                            child: Text(
-                              note.title,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  note.title.length > 15
+                                      ? note.title.substring(0, 15).removeAllWhitespace
+                                      : note.title.removeAllWhitespace,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  note.description.length > 15
+                                      ? note.description
+                                          .split('\n')
+                                          .first
+                                          .substring(0, 15)
+                                          .removeAllWhitespace
+                                      : note.description
+                                          .split('\n')
+                                          .first
+                                          .removeAllWhitespace,
+                                  style: const TextStyle(
+                                    color: Colors.black45,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           PopupMenuButton<String>(

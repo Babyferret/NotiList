@@ -1,3 +1,4 @@
+import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,6 @@ class _TodoListState extends State<TodoList> {
   final auth = FirebaseAuth.instance;
   final WeatherFactory wf = WeatherFactory(api);
   Weather? weather;
-
   @override
   void initState() {
     super.initState();
@@ -57,7 +57,8 @@ class _TodoListState extends State<TodoList> {
                         'My To Do List,',
                         style: TextStyle(
                             color: Color(0xff7a2d2d),
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Adamina'),
                       ),
                       Text(
                         auth.currentUser?.email ?? 'No email available',
@@ -131,91 +132,161 @@ class _TodoListState extends State<TodoList> {
               )),
           child: Padding(
             padding: const EdgeInsets.all(5),
-            child: getTodoList(),
+            child: Column(
+              children: [
+                const Text(
+                  'Today',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(
+                      left: 16, right: 16, top: 5, bottom: 5),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black45,
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: date_picker(),
+                ),
+                getTodoList(),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
+  DatePicker date_picker() {
+    return DatePicker(
+      today,
+      height: 84,
+      width: 60,
+      initialSelectedDate: today,
+      selectionColor: const Color(0xffffdec8),
+      selectedTextColor: Colors.black,
+      dateTextStyle: const TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+      ),
+      dayTextStyle: const TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+      ),
+      onDateChange: (selectedDate) {
+        today = selectedDate;
+      },
+    );
+  }
+
   Widget getTodoList() {
     return Obx(
       () => nc.tasks.isEmpty
-          ? const Center(child: Text('No notes yet'))
-          : ListView.builder(
-              itemCount: nc.tasks.length,
-              itemBuilder: (context, index) => Card(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                shadowColor: Colors.grey.withOpacity(0.5),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: ListTile(
-                  tileColor: nc.tasks[index].colorIndex != null
-                      ? getColorFromIndex(nc.tasks[index].colorIndex)
-                      : Colors.white, // Set tile color based on colorIndex
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(10.0), // Rounded corners
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
+          ? Container(
+              margin: EdgeInsets.only(top: 10),
+              child: Text('No tasks yet'),
+            )
+          : Expanded(
+              child: ListView.builder(
+                itemCount: nc.tasks.length,
+                itemBuilder: (context, index) => Card(
+                  margin: const EdgeInsets.symmetric(
                       vertical: 8.0, horizontal: 16.0),
-                  title: Row(
-                    children: [
-                      Checkbox(
-                        value: nc.tasks[index].isChecked,
-                        onChanged: (newValue) {
-                          nc.tasks[index].isChecked = newValue ?? false;
-                          nc.tasks.refresh(); // Refresh the observable list
-                        },
-                        checkColor: Colors.white,
-                        activeColor: Colors.blue,
-                      ),
-                      const SizedBox(
-                          width: 8), // Add spacing between Checkbox and Text
-                      Expanded(
-                        child: Text(
-                          nc.tasks[index].title,
-                          style: TextStyle(
-                            decoration: nc.tasks[index].isChecked
-                                ? TextDecoration.lineThrough
-                                : null,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
+                  shadowColor: Colors.grey.withOpacity(0.5),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: ListTile(
+                    tileColor: getColorFromIndex(nc.tasks[index].colorIndex),
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(10.0), // Rounded corners
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 16.0),
+                    title: Row(
+                      children: [
+                        Checkbox(
+                          value: nc.tasks[index].isChecked,
+                          onChanged: (newValue) {
+                            nc.tasks[index].isChecked = newValue ?? false;
+                            nc.tasks.refresh(); // Refresh the observable list
+                          },
+                          checkColor: Colors.white,
+                          activeColor: Colors.blue,
+                        ),
+                        const SizedBox(
+                            width: 8), // Add spacing between Checkbox and Text
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                nc.tasks[index].title.length > 15
+                                    ? nc.tasks[index].title.substring(0, 15)
+                                    : nc.tasks[index].title,
+                                style: TextStyle(
+                                  decoration: nc.tasks[index].isChecked
+                                      ? TextDecoration.lineThrough
+                                      : null,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                nc.tasks[index].description.length > 15
+                                    ? nc.tasks[index].title.substring(0, 15)
+                                    : nc.tasks[index].title,
+                                style: const TextStyle(
+                                  color: Colors.black45,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      PopupMenuButton<String>(
-                        onSelected: (value) {
-                          if (value == 'edit') {
-                            Get.to(() => MyTodo(index: index));
-                          } else if (value == 'delete') {
-                            Get.defaultDialog(
-                              title: 'Delete Task',
-                              middleText: nc.tasks[index].title,
-                              onCancel: () => Get.back(),
-                              confirmTextColor: Colors.white,
-                              onConfirm: () {
-                                nc.tasks.removeAt(index);
-                                Get.back();
-                              },
-                            );
-                          }
-                        },
-                        itemBuilder: (BuildContext context) =>
-                            <PopupMenuEntry<String>>[
-                          const PopupMenuItem<String>(
-                            value: 'edit',
-                            child: Text('Edit'),
-                          ),
-                          const PopupMenuItem<String>(
-                            value: 'delete',
-                            child: Text('Delete'),
-                          ),
-                        ],
-                      ),
-                    ],
+                        PopupMenuButton<String>(
+                          onSelected: (value) {
+                            if (value == 'edit') {
+                              Get.to(() => MyTodo(index: index));
+                            } else if (value == 'delete') {
+                              Get.defaultDialog(
+                                title: 'Delete Task',
+                                middleText: nc.tasks[index].title,
+                                onCancel: () => Get.back(),
+                                confirmTextColor: Colors.white,
+                                onConfirm: () {
+                                  nc.tasks.removeAt(index);
+                                  Get.back();
+                                },
+                              );
+                            }
+                          },
+                          itemBuilder: (BuildContext context) =>
+                              <PopupMenuEntry<String>>[
+                            const PopupMenuItem<String>(
+                              value: 'edit',
+                              child: Text('Edit'),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: 'delete',
+                              child: Text('Delete'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

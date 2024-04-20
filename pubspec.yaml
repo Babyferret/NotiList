@@ -44,6 +44,7 @@ dependencies:
   firebase_auth: ^4.19.2
   intl: ^0.19.0
   weather: ^3.1.1
+  date_picker_timeline: ^1.2.6
 
 dev_dependencies:
   flutter_test:
@@ -79,7 +80,9 @@ flutter:
         weight: 400
       - asset: fonts/Poppins-Bold.ttf
         weight: 700
-
+  - family: Adamina
+    fonts:
+      - asset: fonts/Adamina-Regular.ttf
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

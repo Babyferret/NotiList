@@ -57,7 +57,8 @@ class _CalendarState extends State<Calendar> {
                         'My Calendar,',
                         style: TextStyle(
                             color: Color(0xff7a2d2d),
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Adamina'),
                       ),
                       Text(
                         auth.currentUser?.email ?? 'No email available',
@@ -114,6 +115,7 @@ class _CalendarState extends State<Calendar> {
         ),
         child: Container(
           margin: const EdgeInsets.only(top: 20),
+          height: double.maxFinite,
           decoration: const BoxDecoration(
               shape: BoxShape.rectangle,
               color: Color(0xffffefdb),
@@ -131,7 +133,6 @@ class _CalendarState extends State<Calendar> {
                     decoration: const BoxDecoration(
                       shape: BoxShape.rectangle,
                       color: Colors.white,
-                      // color: Color(0xFFBBDDFF),
                       borderRadius: BorderRadius.all(
                         Radius.circular(30),
                       ),
