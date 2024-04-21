@@ -1,16 +1,31 @@
-# notilist
+# Setup Project NotiList Application
 
-A new Flutter project.
+Features
+List the features of your project:
+- Authentication with FirebaseAuth
+- My Calendar
+- My ToDo List
+- My Note
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Installation
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+# Clone the repository
+git clone https://github.com/tanaphat-time/NotiList.git
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# Navigate to the project directory
+cd projectname
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Install dependencies
+flutter pub get
+```
+## Usage
+
+Start debugging main.dart in lib folder with your android devices
+```bash
+void main() async {
+  await GetStorage.init();
+  runApp(const MyApp());
+}
+```
