@@ -15,7 +15,7 @@ class Task {
     this.date,
     this.startTime,
     this.endTime,
-    this.colorIndex = 0, // Default color index
+    this.colorIndex = 0, 
     this.isChecked = false,
   });
 
@@ -23,7 +23,7 @@ class Task {
     return Task(
       title: json['title'] ?? '',
       description: json['description'] ?? '',
-      colorIndex: json['colorIndex'] ?? 0, // Default color index
+      colorIndex: json['colorIndex'] ?? 0, 
       isChecked: json['isChecked'] ?? false,
     );
   }
@@ -52,20 +52,15 @@ class Note {
 
   factory Note.fromJson(Map<String, dynamic> json) {
     return Note(
-      title: json['title'] ?? '', // Use default value if 'title' is null
-      description: json['description'] ?? '', // Use default value if 'description' is null
-      // date: DateTime.parse(json['date']), // Parse date directly
-      // startTime: TimeOfDay.fromDateTime(DateTime.parse(json['startTime'])), // Parse startTime directly
-      // endTime: TimeOfDay.fromDateTime(DateTime.parse(json['endTime'])), // Parse endTime directly
+      title: json['title'] ?? '', 
+      description: json['description'] ?? '', 
+
     );
   }
 
   Map<String, dynamic> toJson() => {
         'title': title,
         'description': description,
-        // 'date': date.toIso8601String(), // Convert DateTime to ISO 8601 string
-        // 'startTime': '${startTime.hour}:${startTime.minute}', // Format startTime as HH:mm string
-        // 'endTime': '${endTime.hour}:${endTime.minute}', // Format endTime as HH:mm string
       };
 }
 
