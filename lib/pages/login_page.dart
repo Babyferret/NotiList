@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
   ElevatedButton signup(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
           return const RegisterPage();
         }));
       },

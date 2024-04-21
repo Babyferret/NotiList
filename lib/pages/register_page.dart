@@ -106,7 +106,7 @@ class _RegisterPageState extends State<RegisterPage> {
               await FirebaseAuth.instance.createUserWithEmailAndPassword(
                   email: profile.email, password: profile.password);
               formKey.currentState!.reset();
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
                 return const LoginPage();
               }));
             } on FirebaseAuthException catch (e) {

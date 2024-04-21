@@ -8,7 +8,7 @@ class NoteController extends GetxController {
   void add(Note n) {
     notes.add(n);
   }
-
+  
   @override
   void onInit() {
     List<dynamic>? storedNotes = GetStorage().read<List<dynamic>>('notes');
@@ -20,7 +20,7 @@ class NoteController extends GetxController {
     });
     super.onInit();
   }
-  
+
 }
 
 class TodoController extends GetxController {
